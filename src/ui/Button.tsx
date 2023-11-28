@@ -62,4 +62,9 @@ const Button = styled.button<ButtonProps>`
   ${(props) => variations[props.variation as keyof typeof variations]}
 `;
 
+Button.defaultProps = {
+  size: "small",
+  variation: "primary",
+};
+
 export default Button;
