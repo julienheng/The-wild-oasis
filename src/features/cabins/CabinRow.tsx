@@ -1,4 +1,31 @@
 import styled from "styled-components";
+import { formatCurrency } from "../../utils/helpers";
+
+type Props = {
+  cabin: {
+    id: string;
+    name: string;
+    maxCapacity: number;
+    regularPrice: number;
+    discount: number;
+    image: string;
+  };
+};
+
+export default function CabinRow({ cabin }: Props) {
+  const { name, maxCapacity, regularPrice, discount, image } = cabin;
+
+  return (
+    <TableRow role="row">
+      <Img src={image} alt={cabin.name} />
+      <Cabin>{name}</Cabin>
+      <div>Fits up to {maxCapacity} guests</div>
+      <Price>{formatCurrency(regularPrice)}</Price>
+      <Discount>{formatCurrency(discount)}</Discount>
+      <button>Delete</button>
+    </TableRow>
+  );
+}
 
 const TableRow = styled.div`
   display: grid;
