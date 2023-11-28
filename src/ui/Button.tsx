@@ -1,5 +1,10 @@
 import styled, { css } from "styled-components";
 
+type ButtonProps = {
+  size?: string;
+  variation?: string;
+};
+
 const sizes = {
   small: css`
     font-size: 1.2rem;
@@ -48,21 +53,13 @@ const variations = {
   `,
 };
 
-const Button = styled.button`
-  font-size: 1.4rem;
-  padding: 1.2rem 1.6rem;
-  font-weight: 500;
+const Button = styled.button<ButtonProps>`
   border: none;
   border-radius: var(--border-radius-sm);
-  background-color: var(--color-brand-600);
-  color: var(--color-brand-50);
   box-shadow: var(--box-shadow-sm);
-  cursor: pointer;
 
-  // & = selects the current element
-  &:hover {
-    background-color: var(--color-brand-700);
-  }
+  ${(props) => sizes[props.size as keyof typeof sizes]}
+  ${(props) => variations[props.variation as keyof typeof variations]}
 `;
 
 export default Button;

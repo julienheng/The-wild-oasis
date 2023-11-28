@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 type Props = {
-  type: "horizontal" | "vertical";
+  type?: "horizontal" | "vertical";
 };
 
 const Row = styled.div<Props>`
@@ -20,5 +20,9 @@ const Row = styled.div<Props>`
       gap: 1.6rem;
     `}
 `;
+
+Row.defaultProps = {
+  type: "vertical",
+};
 
 export default Row;
