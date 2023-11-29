@@ -5,6 +5,22 @@ import styled from "styled-components";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
+export default function AppLayout() {
+  return (
+    <StyledAppLayout>
+      <Header />
+      <Sidebar />
+
+      {/*This is where the child routes will be rendered */}
+      <Main>
+        <Container>
+          <Outlet />
+        </Container>
+      </Main>
+    </StyledAppLayout>
+  );
+}
+
 const StyledAppLayout = styled.div`
   display: grid;
   grid-template-columns: 26rem 1fr;
@@ -25,19 +41,3 @@ const Container = styled.div`
   flex-direction: column;
   gap: 3.2rem;
 `;
-
-export default function AppLayout() {
-  return (
-    <StyledAppLayout>
-      <Header />
-      <Sidebar />
-
-      {/*This is where the child routes will be rendered */}
-      <Main>
-        <Container>
-          <Outlet />
-        </Container>
-      </Main>
-    </StyledAppLayout>
-  );
-}
