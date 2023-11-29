@@ -1,6 +1,5 @@
 import supabase from "./supabase";
 
-
 // GET ALL CABINS
 export async function getCabins() {
   const { data, error } = await supabase.from("cabins").select("*");
@@ -8,6 +7,17 @@ export async function getCabins() {
   if (error) {
     console.error(error);
     throw new Error("Cabins could not be loaded");
+  }
+
+  return data;
+}
+
+export async function createCabin(newCabin: object) {
+  const { data, error } = await supabase.from("cabins").insert([newCabin]);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Cabins could not be created");
   }
 
   return data;
