@@ -25,6 +25,11 @@ type Props = {
   };
 };
 
+interface EditCabinData {
+  newCabinData: any;
+  id: string;
+}
+
 function CreateCabinForm({
   cabinToEdit = {
     id: "",
@@ -47,7 +52,7 @@ function CreateCabinForm({
   const { errors } = formState;
 
   const { mutate: createCabin, isLoading: isCreating } = useMutation({
-    mutationFn: createEditCabin,
+    mutationFn: (newCabinData) => createEditCabin(newCabinData, null),
     onSuccess: () => {
       toast.success("New cabin successfully created!");
       queryClient.invalidateQueries({
@@ -59,7 +64,9 @@ function CreateCabinForm({
   });
 
   const { mutate: editCabin, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newCabinData, id }) => createEditCabin( newCabinData, id ),
+    mutationFn: ({ newCabinData, id }: EditCabinData) => {
+      return createEditCabin(newCabinData, id);
+    },
     onSuccess: () => {
       toast.success("Cabin successfully edited!");
       queryClient.invalidateQueries({
@@ -75,9 +82,14 @@ function CreateCabinForm({
   const onSubmit = (data: any) => {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
-    if (isEditSession)
-      editCabin({ newCabinData: { ...data, image }, id: editId });
-    else createCabin({ ...data, image: image });
+    if (isEditSession) {
+      editCabin({
+        newCabinData: { ...data, image },
+        id: editId,
+      });
+    } else {
+      createCabin({ ...data, image: image });
+    }
   };
 
   // const onError = (errors: object) => {};
