@@ -17,7 +17,7 @@ export function useUpdateSetting() {
     mutationFn: (newSettingData: updateSettingData) =>
       updateSettingApi(newSettingData),
     onSuccess: () => {
-      toast.success("Settings successfully edited!");
+      toast.success("Settings successfully updated!");
       queryClient.invalidateQueries({
         queryKey: ["settings"],
       });

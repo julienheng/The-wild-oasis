@@ -28,7 +28,13 @@ function UpdateSettingsForm() {
   ) => {
     const { value } = e.target;
     if (!value) return;
-    updateSetting({ [field]: value });
+    updateSetting({
+      [field]: value,
+      minBookingLength,
+      maxBookingLength,
+      maxGuestsPerBooking,
+      breakfastPrice,
+    });
   };
 
   return (
@@ -66,13 +72,12 @@ function UpdateSettingsForm() {
         />
       </FormRow>
       <FormRow>
-        <Label htmlFor="name">Breakfast price</Label>
-
+        <Label htmlFor="name">Breakfast Price</Label>
         <Input
           type="number"
-          disabled={isUpdating}
           id="breakfast-price"
           defaultValue={breakfastPrice}
+          disabled={isUpdating}
           onBlur={(e) => handleUpdate(e, "breakfastPrice")}
         />
       </FormRow>
@@ -113,7 +118,7 @@ const Label = styled.label`
   font-weight: 500;
 `;
 
-const Error = styled.span`
-  font-size: 1.4rem;
-  color: var(--color-red-700);
-`;
+// const Error = styled.span`
+//   font-size: 1.4rem;
+//   color: var(--color-red-700);
+// `;
