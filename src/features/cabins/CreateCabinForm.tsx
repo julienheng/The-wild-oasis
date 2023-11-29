@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { createEditCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useCreateCabin } from "./useCreateCabin";
+import { useEditCabin } from "./useEditCabin";
 
 // COMPONENTS
 import Input from "../../ui/Input";
@@ -25,11 +27,6 @@ type Props = {
   };
 };
 
-interface EditCabinData {
-  newCabinData: any;
-  id: string;
-}
-
 function CreateCabinForm({
   cabinToEdit = {
     id: "",
@@ -41,8 +38,6 @@ function CreateCabinForm({
     image: "",
   },
 }: Props) {
-  const queryClient = useQueryClient();
-
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
@@ -51,31 +46,8 @@ function CreateCabinForm({
   });
   const { errors } = formState;
 
-  const { mutate: createCabin, isLoading: isCreating } = useMutation({
-    mutationFn: (newCabinData) => createEditCabin(newCabinData, null),
-    onSuccess: () => {
-      toast.success("New cabin successfully created!");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      reset();
-    },
-    onError: (err: Error) => toast.error(err.message),
-  });
-
-  const { mutate: editCabin, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newCabinData, id }: EditCabinData) => {
-      return createEditCabin(newCabinData, id);
-    },
-    onSuccess: () => {
-      toast.success("Cabin successfully edited!");
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      reset();
-    },
-    onError: (err: Error) => toast.error(err.message),
-  });
+  const { createCabin, isCreating } = useCreateCabin();
+  const { editCabin, isEditing } = useEditCabin();
 
   const isWorking = isCreating || isEditing;
 
@@ -91,8 +63,6 @@ function CreateCabinForm({
       createCabin({ ...data, image: image });
     }
   };
-
-  // const onError = (errors: object) => {};
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
