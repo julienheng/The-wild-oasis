@@ -9,7 +9,7 @@ type Props = {
 export default function FormRow({ label, error, children }: Props) {
   return (
     <StyledFormRow>
-      {label && <Label htmlFor={children?.props?.id}>{label}</Label>}
+      {label && <Label htmlFor={children?.props.id}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}
     </StyledFormRow>

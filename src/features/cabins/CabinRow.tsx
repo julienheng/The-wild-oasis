@@ -41,6 +41,7 @@ export default function CabinRow({ cabin }: Props) {
       discount,
       image,
       description,
+      id: cabinId,
     });
   };
 

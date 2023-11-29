@@ -10,10 +10,10 @@ interface updateSettingData {
   breakfastPrice: number;
 }
 
-export function useEditSetting() {
+export function useUpdateSetting() {
   const queryClient = useQueryClient();
 
-  const { mutate: updateSetting, isLoading: isSetting } = useMutation({
+  const { mutate: updateSetting, isLoading: isUpdating } = useMutation({
     mutationFn: (newSettingData: updateSettingData) =>
       updateSettingApi(newSettingData),
     onSuccess: () => {
@@ -25,5 +25,5 @@ export function useEditSetting() {
     onError: (err: Error) => toast.error(err.message),
   });
 
-  return { isSetting, updateSetting };
+  return { isUpdating, updateSetting };
 }

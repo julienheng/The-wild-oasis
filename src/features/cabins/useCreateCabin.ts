@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { createEditCabin as createEditCabinApi } from "../../services/apiCabins";
 
 interface CabinData {
+  id: string;
   name: string;
   maxCapacity: number;
   regularPrice: number;
