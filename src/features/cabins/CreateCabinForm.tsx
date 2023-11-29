@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
@@ -29,18 +30,19 @@ function CreateCabinForm() {
     onError: (err: Error) => toast.error(err.message),
   });
 
-  const onSubmit = (data: object) => {
-    mutate(data);
+  const onSubmit = (data: any) => {
+    mutate({ ...data, image: data.image[0] });
   };
 
-  const onError = (errors: object) => {};
+  // const onError = (errors: object) => {};
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input
           type="text"
+          disabled={isCreating}
           id="name"
           {...register("name", { required: "This field is required" })}
         />
@@ -62,6 +64,9 @@ function CreateCabinForm() {
             },
           })}
         />
+        {errors?.maxCapacity?.message && (
+          <Error>{errors.maxCapacity.message as string}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -77,6 +82,9 @@ function CreateCabinForm() {
             },
           })}
         />
+        {errors?.regularPrice?.message && (
+          <Error>{errors.regularPrice.message as string}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -84,6 +92,7 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="discount"
+          disabled={isCreating}
           defaultValue={0}
           {...register("discount", {
             required: "This field is required",
@@ -92,6 +101,9 @@ function CreateCabinForm() {
               "Discount should be less than regular price",
           })}
         />
+        {errors?.discount?.message && (
+          <Error>{errors.discount.message as string}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -101,6 +113,9 @@ function CreateCabinForm() {
           id="description"
           defaultValue=""
         />
+        {errors?.description?.message && (
+          <Error>{errors.description.message as string}</Error>
+        )}
       </FormRow>
 
       <FormRow>
@@ -108,8 +123,12 @@ function CreateCabinForm() {
         <FileInput
           id="image"
           accept="image/*"
+          type="file"
           {...register("image", { required: "This field is required" })}
         />
+        {errors?.image?.message && (
+          <Error>{errors.image.message as string}</Error>
+        )}
       </FormRow>
 
       <FormRow>
