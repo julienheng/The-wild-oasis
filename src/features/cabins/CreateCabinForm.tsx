@@ -35,18 +35,19 @@ function CreateCabinForm({
     image: "",
   },
 }: Props) {
+  const { createCabin, isCreating } = useCreateCabin();
+  const { editCabin, isEditing } = useEditCabin();
+  const isWorking = isCreating || isEditing;
+
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
+  
   const { errors } = formState;
 
-  const { createCabin, isCreating } = useCreateCabin();
-  const { editCabin, isEditing } = useEditCabin();
-
-  const isWorking = isCreating || isEditing;
 
   const onSubmit = (data: any) => {
     const image = typeof data.image === "string" ? data.image : data.image[0];
