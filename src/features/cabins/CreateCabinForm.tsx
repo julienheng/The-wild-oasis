@@ -2,9 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { createEditCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
@@ -55,12 +52,26 @@ function CreateCabinForm({
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
     if (isEditSession) {
-      editCabin({
-        newCabinData: { ...data, image },
-        id: editId,
-      });
+      editCabin(
+        {
+          newCabinData: { ...data, image },
+          id: editId,
+        },
+        {
+          onSuccess: () => {
+            reset();
+          },
+        }
+      );
     } else {
-      createCabin({ ...data, image: image });
+      createCabin(
+        { ...data, image: image },
+        {
+          onSuccess: () => {
+            reset();
+          },
+        }
+      );
     }
   };
 
