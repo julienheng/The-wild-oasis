@@ -13,7 +13,7 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 
 type Props = {
-  cabinToEdit: {
+  cabinToEdit?: {
     id: string;
     name: string;
     maxCapacity: number;
@@ -22,6 +22,7 @@ type Props = {
     discount: number;
     image: string;
   };
+  onCloseModal?: () => void;
 };
 
 function CreateCabinForm({
@@ -34,6 +35,7 @@ function CreateCabinForm({
     discount: 0,
     image: "",
   },
+  onCloseModal,
 }: Props) {
   const { createCabin, isCreating } = useCreateCabin();
   const { editCabin, isEditing } = useEditCabin();
@@ -45,9 +47,8 @@ function CreateCabinForm({
   const { register, handleSubmit, reset, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
-  
-  const { errors } = formState;
 
+  const { errors } = formState;
 
   const onSubmit = (data: any) => {
     const image = typeof data.image === "string" ? data.image : data.image[0];
@@ -61,6 +62,7 @@ function CreateCabinForm({
         {
           onSuccess: () => {
             reset();
+            onCloseModal?.();
           },
         }
       );
@@ -70,6 +72,7 @@ function CreateCabinForm({
         {
           onSuccess: () => {
             reset();
+            onCloseModal?.();
           },
         }
       );
@@ -77,7 +80,10 @@ function CreateCabinForm({
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input
@@ -179,7 +185,11 @@ function CreateCabinForm({
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isWorking}>
