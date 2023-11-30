@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { cloneElement, createContext, useContext } from "react";
+import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
-import { useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 type Props = {
   children: any;
   onClose?: () => void;
-  name?: any;
+  name?: string;
   opens?: any;
 };
 
@@ -71,6 +70,8 @@ Modal.Open = Open;
 Modal.Window = Window;
 
 export default Modal;
+
+
 
 const StyledModal = styled.div`
   position: fixed;
