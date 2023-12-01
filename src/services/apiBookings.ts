@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { PAGE_SIZE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
@@ -27,7 +28,9 @@ export async function getAllBookings({ filter, sortBy, page }: any) {
 
   // PAGINATION
   if (page) {
-    (query as any) = (query as any).range((page - 1) * 10, page * 10 - 1);
+    const from = (page - 1) * PAGE_SIZE;
+    const to = page * PAGE_SIZE - 1;
+    (query as any) = query.range(from, to);
   }
 
   const { data, error, count } = await query;
