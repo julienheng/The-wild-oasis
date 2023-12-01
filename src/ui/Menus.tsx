@@ -73,7 +73,6 @@ const StyledButton = styled.button`
 type Props = {
   children?: any;
   id?: string;
-  bookingId?: number;
   icon?: any;
   onClick?: () => void;
 };

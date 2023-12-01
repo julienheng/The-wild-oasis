@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 // COMPONENTS
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
+import Modal from "../../ui/Modal";
 import { HiArrowDownOnSquare, HiEye } from "react-icons/hi2";
 import Menus from "../../ui/Menus";
 
@@ -28,11 +29,11 @@ type Props = {
 function BookingRow({
   booking: {
     id: bookingId,
-    // created_at,
+    created_at,
     startDate,
     endDate,
     numNights,
-    // numGuests,
+    numGuests,
     totalPrice,
     status,
     guests: { fullName: guestName, email },
@@ -40,6 +41,8 @@ function BookingRow({
   },
 }: Props) {
   const navigate = useNavigate();
+  // const { checkout, isCheckingOut } = useCheckout();
+  // const { deleteBooking, isDeleting } = useDeleteBooking();
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -75,26 +78,26 @@ function BookingRow({
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
 
-      <Menus.Menu>
-        <Menus.Toggle bookingId={bookingId} />
-        <Menus.List bookingId={bookingId}>
-          <Menus.Button
-            icon={<HiEye />}
-            onClick={() => navigate(`/bookings/${bookingId}`)}
-          >
-            See details
-          </Menus.Button>
-
-          {status === "unconfirmed" && (
+        <Menus.Menu>
+          <Menus.Toggle id={bookingId} />
+          <Menus.List id={bookingId}>
             <Menus.Button
-              icon={<HiArrowDownOnSquare />}
-              onClick={() => navigate(`/checkin/${bookingId}`)}
+              icon={<HiEye />}
+              onClick={() => navigate(`/bookings/${bookingId}`)}
             >
-              Check In
+              See details
             </Menus.Button>
-          )}
 
-          {/* {status === "checked-in" && (
+            {status === "unconfirmed" && (
+              <Menus.Button
+                icon={<HiArrowDownOnSquare />}
+                onClick={() => navigate(`/checkin/${bookingId}`)}
+              >
+                Check In
+              </Menus.Button>
+            )}
+
+            {/* {status === "checked-in" && (
             <Menus.Button
               icon={<HiArrowUpOnSquare />}
               onClick={() => checkout(bookingId)}
@@ -104,11 +107,11 @@ function BookingRow({
             </Menus.Button>
           )} */}
 
-          {/* <Modal.Open opens="delete">
+            {/* <Modal.Open opens="delete">
             <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
           </Modal.Open> */}
-        </Menus.List>
-      </Menus.Menu>
+          </Menus.List>
+        </Menus.Menu>
     </Table.Row>
   );
 }
