@@ -28,11 +28,11 @@ type Props = {
 function BookingRow({
   booking: {
     id: bookingId,
-    created_at,
+    // created_at,
     startDate,
     endDate,
     numNights,
-    numGuests,
+    // numGuests,
     totalPrice,
     status,
     guests: { fullName: guestName, email },
@@ -76,8 +76,8 @@ function BookingRow({
       <Amount>{formatCurrency(totalPrice)}</Amount>
 
       <Menus.Menu>
-        <Menus.Toggle id={bookingId} />
-        <Menus.List id={bookingId}>
+        <Menus.Toggle bookingId={bookingId} />
+        <Menus.List bookingId={bookingId}>
           <Menus.Button
             icon={<HiEye />}
             onClick={() => navigate(`/bookings/${bookingId}`)}
@@ -88,11 +88,25 @@ function BookingRow({
           {status === "unconfirmed" && (
             <Menus.Button
               icon={<HiArrowDownOnSquare />}
-              onClick={() => navigate(`/bookings/${bookingId}`)}
+              onClick={() => navigate(`/checkin/${bookingId}`)}
             >
               Check In
             </Menus.Button>
           )}
+
+          {/* {status === "checked-in" && (
+            <Menus.Button
+              icon={<HiArrowUpOnSquare />}
+              onClick={() => checkout(bookingId)}
+              disabled={isCheckingOut}
+            >
+              Check out
+            </Menus.Button>
+          )} */}
+
+          {/* <Modal.Open opens="delete">
+            <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
+          </Modal.Open> */}
         </Menus.List>
       </Menus.Menu>
     </Table.Row>

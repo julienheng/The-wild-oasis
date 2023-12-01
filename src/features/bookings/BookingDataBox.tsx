@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
 import {
@@ -68,7 +69,11 @@ const Guest = styled.div`
   }
 `;
 
-const Price = styled.div`
+interface PriceProps {
+  isPaid: boolean;
+}
+
+const Price = styled.div<PriceProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -101,8 +106,12 @@ const Footer = styled.footer`
   text-align: right;
 `;
 
+type Props = {
+  booking: any;
+};
+
 // A purely presentational component
-function BookingDataBox({ booking }) {
+function BookingDataBox({ booking }: Props) {
   const {
     created_at,
     startDate,
