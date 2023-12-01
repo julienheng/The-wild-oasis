@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 // COMPONENTS
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
-import Modal from "../../ui/Modal";
+// import Modal from "../../ui/Modal";
 import { HiArrowDownOnSquare, HiEye } from "react-icons/hi2";
 import Menus from "../../ui/Menus";
 
@@ -29,11 +29,11 @@ type Props = {
 function BookingRow({
   booking: {
     id: bookingId,
-    created_at,
+    // created_at,
     startDate,
     endDate,
     numNights,
-    numGuests,
+    // numGuests,
     totalPrice,
     status,
     guests: { fullName: guestName, email },

@@ -72,7 +72,7 @@ const StyledButton = styled.button`
 
 type Props = {
   children?: any;
-  id?: string;
+  id?: any;
   icon?: any;
   onClick?: () => void;
 };
