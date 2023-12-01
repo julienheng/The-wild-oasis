@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { PAGE_SIZE } from "../utils/constants";
 
 interface PaginationProps {
-  active: string;
+  active?: string;
 }
 
 type Props = {
