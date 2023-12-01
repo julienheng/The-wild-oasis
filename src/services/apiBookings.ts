@@ -2,32 +2,42 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
-export async function getAllBookings({ filter, sortBy }: any) {
+export async function getAllBookings({ filter, sortBy, page }: any) {
   let query = supabase
     .from("bookings")
     .select(
-      "id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)"
+      "id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)",
+      { count: "exact" }
     );
 
   // FILTER
   if (filter) {
-    (query as any) = (query as any)[filter.method || 'eq'](filter.field, filter.value);
+    (query as any) = (query as any)[filter.method || "eq"](
+      filter.field,
+      filter.value
+    );
   }
-
 
   // SORT
   if (sortBy) {
-    (query as any) = (query as any).order(sortBy.field, { ascending: sortBy.direction === 'asc' });
+    (query as any) = (query as any).order(sortBy.field, {
+      ascending: sortBy.direction === "asc",
+    });
   }
 
-  const { data, error } = await query;
+  // PAGINATION
+  if (page) {
+    (query as any) = (query as any).range((page - 1) * 10, page * 10 - 1);
+  }
+
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error);
     throw new Error("Bookings could  not be loaded");
   }
 
-  return data;
+  return { data, count };
 }
 
 export async function getBooking(id: string) {
