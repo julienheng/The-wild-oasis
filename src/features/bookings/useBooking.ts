@@ -3,9 +3,7 @@ import { getBooking } from "../../services/apiBookings";
 import { useParams } from "react-router-dom";
 
 export function useBooking() {
-
   const { bookingId } = useParams();
-  
 
   const {
     isLoading,
@@ -13,8 +11,14 @@ export function useBooking() {
     error,
   } = useQuery({
     queryKey: ["booking", bookingId],
-    queryFn: () => getBooking(bookingId),
-    retry: false, // try to fetch data 3 times 
+    queryFn: () => {
+      if (bookingId) {
+        return getBooking(bookingId);
+      } else {
+        throw new Error("Booking ID is undefined");
+      }
+    },
+    retry: false, // try to fetch data 3 times
   });
 
   return { isLoading, error, booking };
