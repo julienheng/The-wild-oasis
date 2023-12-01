@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 // COMPONENTS
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
-import { HiEye } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiEye } from "react-icons/hi2";
 import Menus from "../../ui/Menus";
-
 
 type Props = {
   booking: {
@@ -40,8 +39,7 @@ function BookingRow({
     cabins: { name: cabinName },
   },
 }: Props) {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -80,7 +78,21 @@ function BookingRow({
       <Menus.Menu>
         <Menus.Toggle id={bookingId} />
         <Menus.List id={bookingId}>
-          <Menus.Button icon={<HiEye />} onClick={() => navigate(`/bookings/${bookingId}`)}>See details</Menus.Button>
+          <Menus.Button
+            icon={<HiEye />}
+            onClick={() => navigate(`/bookings/${bookingId}`)}
+          >
+            See details
+          </Menus.Button>
+
+          {status === "unconfirmed" && (
+            <Menus.Button
+              icon={<HiArrowDownOnSquare />}
+              onClick={() => navigate(`/bookings/${bookingId}`)}
+            >
+              Check In
+            </Menus.Button>
+          )}
         </Menus.List>
       </Menus.Menu>
     </Table.Row>
@@ -115,4 +127,3 @@ const Amount = styled.div`
   font-family: "Sono";
   font-weight: 500;
 `;
-

@@ -31,6 +31,7 @@ type Props = {
   disabled?: boolean;
   id: string;
   children: React.ReactNode;
+  // value?: string;
 }
 
 function Checkbox({ checked, onChange, disabled = false, id, children }: Props) {
