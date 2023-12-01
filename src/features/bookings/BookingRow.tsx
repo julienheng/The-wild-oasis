@@ -34,6 +34,21 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
+type Props = {
+  booking: {
+    id: number;
+    created_at: string;
+    startDate: string;
+    endDate: string;
+    numNights: number;
+    numGuests: number;
+    totalPrice: number;
+    status: string;
+    guests: { fullName: string; email: string };
+    cabins: { name: string };
+  };
+};
+
 function BookingRow({
   booking: {
     id: bookingId,
@@ -47,7 +62,7 @@ function BookingRow({
     guests: { fullName: guestName, email },
     cabins: { name: cabinName },
   },
-}) {
+}: Props) {
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
