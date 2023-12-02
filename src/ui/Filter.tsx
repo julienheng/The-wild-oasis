@@ -50,10 +50,8 @@ export default function Filter({ filterField, options }: Props) {
   const currentFilter = searchParams.get(filterField) || options.at(0)?.value;
 
   const handleClick = (value: string) => {
-    searchParams.set(
-      filterField,
-      options.find((option) => option.value === value)?.value || "all"
-    );
+    searchParams.set(filterField, value);
+    if (searchParams.get("page")) searchParams.set("page", "1");
     setSearchParams(searchParams);
   };
 
@@ -64,7 +62,7 @@ export default function Filter({ filterField, options }: Props) {
           key={option.value}
           onClick={() => handleClick(option.value)}
           active={option.value === currentFilter}
-           disabled={option.value === currentFilter}
+          disabled={option.value === currentFilter}
         >
           {option.label}
         </FilterButton>
