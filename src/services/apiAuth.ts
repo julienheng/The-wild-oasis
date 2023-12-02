@@ -6,7 +6,7 @@ type loginData = {
   password: string;
 };
 
-export async function Login({ email, password }: loginData) {
+export async function login({ email, password }: loginData) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
