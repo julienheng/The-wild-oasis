@@ -75,6 +75,7 @@ type Props = {
   id?: any;
   icon?: any;
   onClick?: () => void;
+  disabled?: boolean;
 };
 
 interface MenusProps {
