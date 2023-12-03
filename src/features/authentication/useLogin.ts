@@ -23,7 +23,7 @@ export function useLogin() {
       // SAVE USER IN REACT QUERY TO QUERY CACHE
       // queryClient.setQueriesData(["user"], user);
       console.log(user);
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true });
     },
     onError: (error) => {
       console.log("Err", error);
