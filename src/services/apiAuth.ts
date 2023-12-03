@@ -42,15 +42,15 @@ export async function logout() {
 type signupData = {
   email: string;
   password: string;
-  fullname: string;
+  fullName: string;
 };
 
-export async function signup({ fullname, email, password }: signupData) {
+export async function signup({ fullName, email, password }: signupData) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: { fullname, avatar: "" },
+      data: { fullName, avatar: "" },
     },
   });
 
