@@ -9,7 +9,9 @@ interface LoginData {
 }
 
 export function useLogin() {
+  // const queryClient = useQueryClient();
   const navigate = useNavigate();
+
   // Something changed on the server
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }: LoginData) =>
@@ -18,6 +20,8 @@ export function useLogin() {
         password,
       }),
     onSuccess: (user) => {
+      // SAVE USER IN REACT QUERY TO QUERY CACHE
+      // queryClient.setQueriesData(["user"], user);
       console.log(user);
       navigate("/dashboard");
     },
