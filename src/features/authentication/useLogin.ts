@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login as loginApi } from "../../services/apiAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -9,7 +9,7 @@ interface LoginData {
 }
 
 export function useLogin() {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   // Something changed on the server
@@ -21,7 +21,7 @@ export function useLogin() {
       }),
     onSuccess: (user) => {
       // SAVE USER IN REACT QUERY TO QUERY CACHE
-      // queryClient.setQueriesData(["user"], user);
+      queryClient.setQueryData(["user"], user.user);
       console.log(user);
       navigate("/dashboard", { replace: true });
     },
