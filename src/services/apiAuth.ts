@@ -33,8 +33,28 @@ export async function getCurrentUser() {
 
 // LOG OUT
 export async function logout() {
-  
   const { error } = await supabase.auth.signOut();
 
-  if(error) throw new Error(error.message)
+  if (error) throw new Error(error.message);
+}
+
+// SIGN UP
+type signupData = {
+  email: string;
+  password: string;
+  fullname: string;
+};
+
+export async function signup({ fullname, email, password }: signupData) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { fullname, avatar: "" },
+    },
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
 }
