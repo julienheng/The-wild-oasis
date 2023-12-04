@@ -1,4 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
+import { useUser } from "./useUser";
+
+type User = {
+  fullName: string;
+  avatar: string;
+};
+
+export default function UserAvatar() {
+  const { user } = useUser();
+
+  const { fullName, avatar } = user as unknown as User;
+
+  return (
+    <StyledUserAvatar>
+      <Avatar
+        src={avatar || "default-user.jpg"}
+        alt={`Avatar of ${fullName}`}
+      />
+      <span>{fullName}</span>
+    </StyledUserAvatar>
+  );
+}
 
 const StyledUserAvatar = styled.div`
   display: flex;
