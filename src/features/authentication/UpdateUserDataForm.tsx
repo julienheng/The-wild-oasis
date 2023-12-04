@@ -24,16 +24,29 @@ function UpdateUserDataForm() {
   const { updateUser, isUpdating } = useUpdateUser();
 
   const [fullName, setFullName] = useState(currentFullName);
-  const [avatar, setAvatar] = useState<any>();
+  const [avatar, setAvatar] = useState<any>("");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!fullName) return;
-    updateUser({
-      avatar,
-      fullName,
-      password: "",
-    });
+    updateUser(
+      {
+        avatar,
+        fullName,
+        password: "",
+      },
+      {
+        onSuccess: () => {
+          setAvatar("");
+          (e.target as HTMLFormElement).reset();
+        },
+      }
+    );
+  }
+
+  function handleCancel() {
+    setFullName(currentFullName);
+    setAvatar("");
   }
 
   return (
@@ -68,7 +81,12 @@ function UpdateUserDataForm() {
         />
       </FormRow>
       <FormRow>
-        <Button type="reset" variation="secondary" disabled={isUpdating}>
+        <Button
+          type="reset"
+          variation="secondary"
+          disabled={isUpdating}
+          onClick={handleCancel}
+        >
           Cancel
         </Button>
         <Button disabled={isUpdating}>Update account</Button>
