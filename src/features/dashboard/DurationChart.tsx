@@ -90,12 +90,12 @@ const startDataDark = [
   },
   {
     duration: "4-5 nights",
-    value: 4,
+    value: 0,
     color: "#4d7c0f",
   },
   {
     duration: "6-7 nights",
-    value: 7,
+    value: 0,
     color: "#15803d",
   },
   {
@@ -105,7 +105,7 @@ const startDataDark = [
   },
   {
     duration: "15-21 nights",
-    value: 2,
+    value: 0,
     color: "#1d4ed8",
   },
   {
@@ -118,7 +118,6 @@ const startDataDark = [
 // type Props = {
 //   stays: any[];
 //   theme: string;
-
 
 function prepareData(startData: any, stays: any) {
   // A bit ugly code, but sometimes this is what it takes when working with real data 😅
@@ -148,8 +147,8 @@ function prepareData(startData: any, stays: any) {
 }
 
 type Props = {
-  confirmedStays: any[];
-}
+  confirmedStays: any;
+};
 
 function DurationChart({ confirmedStays }: Props) {
   const { isDarkMode } = useDarkMode();
