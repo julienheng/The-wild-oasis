@@ -39,5 +39,8 @@ export default function ProtectedRoute({ children }: Props) {
     );
 
   // 4. if authenticated, show the children/render app
-  if (isAuthenticated) return children;
+  if (isAuthenticated) return <>{children}</>;
+
+  // You might want to return null or a fallback component if not authenticated
+  return null;
 }
