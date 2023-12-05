@@ -90,7 +90,7 @@ const MenusContext = createContext<MenusProps>({
   openId: "",
   close: () => {},
   open: () => {},
-  position: { x: 0, y: 0 },
+  position: { x: 10, y: 0 },
   setPosition: () => {},
 });
 
@@ -114,6 +114,8 @@ function Toggle({ id }: Props) {
   const { openId, open, close, setPosition } = useContext(MenusContext);
 
   const handleClick = (e: any) => {
+    e.stopPropagation();
+
     if (e.target instanceof HTMLElement) {
       const rect = e.closest("button").getBoundingClientRect();
       setPosition({
@@ -137,7 +139,7 @@ function Toggle({ id }: Props) {
 function List({ id, children }: Props) {
   const { openId, position, close } = useContext(MenusContext);
 
-  const ref = useOutsideClick2(close);
+  const ref = useOutsideClick2(close, false);
 
   if (openId !== id) return null;
 

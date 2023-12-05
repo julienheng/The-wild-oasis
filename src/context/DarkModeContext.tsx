@@ -12,7 +12,10 @@ type Props = {
 };
 
 function DarkModeProvider({ children }: Props) {
-  const [isDarkMode, setIsDarkMode] = useLocalStorageState(false, "isDarkMode");
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState(
+    window.matchMedia("(prefers-color-scheme: dark)").matches,
+    "isDarkMode"
+  );
 
   function toggleDarkMode() {
     setIsDarkMode((isDark: boolean) => !isDark);
